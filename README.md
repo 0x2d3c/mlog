@@ -15,12 +15,12 @@ TraceKey: "userID",
 Writer:   assertFile("min.log"),
 })
 
-mlog.Info(ctx, "this is New info test")
-mlog.Infof(ctx, "this is New %s test", "infof")
-mlog.Warn(ctx, "this is New warn test")
-mlog.Warnf(ctx, "this is New %s test", "warnf")
-mlog.Error(ctx, "this is New error test")
-mlog.Errorf(ctx, "this is New %s test", "errorf")
+minlog.Info(ctx, "this is New info test")
+minlog.Infof(ctx, "this is New %s test", "infof")
+minlog.Warn(ctx, "this is New warn test")
+minlog.Warnf(ctx, "this is New %s test", "warnf")
+minlog.Error(ctx, "this is New error test")
+minlog.Errorf(ctx, "this is New %s test", "errorf")
 ```
 
 ```shell script
@@ -75,10 +75,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var mlog *mlog.mlog
+var minlog *mlog.Mlog
 
 func init() {
-	mlog = mlog.New(&mlog.Option{
+	minlog = mlog.New(&mlog.Option{
 		Lvl:      mlog.Info,
 		Writer:   file(),
 		Release:  false,
@@ -102,9 +102,9 @@ func RecordRequest(ctx *gin.Context) {
 
 	cc := ctx.Copy()
 
-	mlog.Info(cc, fmt.Sprintf("[uri:%s][body: %s]", uri, body))
-	mlog.Debug(cc, fmt.Sprintf("[uri:%s][body: %s]", uri, body))
-	mlog.Error(cc, fmt.Sprintf("[uri:%s][body: %s]", uri, body))
+	minlog.Info(cc, fmt.Sprintf("[uri:%s][body: %s]", uri, body))
+	minlog.Debug(cc, fmt.Sprintf("[uri:%s][body: %s]", uri, body))
+	minlog.Error(cc, fmt.Sprintf("[uri:%s][body: %s]", uri, body))
 
 	ctx.Next()
 }
