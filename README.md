@@ -15,12 +15,12 @@ TraceKey: "userID",
 Writer:   assertFile("min.log"),
 })
 
-minlog.Info(ctx, "this is New info test")
-minlog.Infof(ctx, "this is New %s test", "infof")
-minlog.Warn(ctx, "this is New warn test")
-minlog.Warnf(ctx, "this is New %s test", "warnf")
-minlog.Error(ctx, "this is New error test")
-minlog.Errorf(ctx, "this is New %s test", "errorf")
+mlog.Info(ctx, "this is New info test")
+mlog.Infof(ctx, "this is New %s test", "infof")
+mlog.Warn(ctx, "this is New warn test")
+mlog.Warnf(ctx, "this is New %s test", "warnf")
+mlog.Error(ctx, "this is New error test")
+mlog.Errorf(ctx, "this is New %s test", "errorf")
 ```
 
 ```shell script
