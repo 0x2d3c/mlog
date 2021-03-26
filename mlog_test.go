@@ -5,7 +5,6 @@ import (
 	"io"
 	"os"
 	"testing"
-	"time"
 )
 
 func assertFile(name string) io.StringWriter {
@@ -18,10 +17,9 @@ func assertFile(name string) io.StringWriter {
 
 func assertNew() *Mlog {
 	return New(&Option{
-		Release:  true,
-		Lvl:      Info,
-		TraceKey: "userID",
-		Writer:   assertFile("min.log"),
+		Release: false,
+		Lvl:     Info,
+		Writer:  assertFile("m.log"),
 	})
 }
 
@@ -29,15 +27,14 @@ func TestNew(t *testing.T) {
 	minLog := assertNew()
 	ctx := context.WithValue(context.Background(), "userID", "9527")
 	minLog.Info(ctx, "this is New info test")
-	minLog.Infof(ctx, "this is New %s test", "infof")
+	minLog.Info(ctx, "this is New %s test", "infof")
 	minLog.Debug(ctx, "this is New debug test")
-	minLog.Debugf(ctx, "this is New %s test", "debugf")
+	minLog.Debug(ctx, "this is New %s test", "debugf")
 	minLog.Error(ctx, "this is New error test")
-	minLog.Errorf(ctx, "this is New %s test", "errorf")
+	minLog.Error(ctx, "this is New %s test", "errorf")
 	minLog.Warn(ctx, "this is New warn test")
-	minLog.Warnf(ctx, "this is New %s test", "warnf")
+	minLog.Warn(ctx, "this is New %s test", "warnf")
 	minLog.Exit()
-	time.Sleep(time.Second)
 }
 
 func BenchmarkNewWithOutF(b *testing.B) {
@@ -71,22 +68,22 @@ func BenchmarkNewWithF(b *testing.B) {
 	ctx := context.WithValue(context.Background(), "userID", "9527")
 	b.Run("infof", func(bb *testing.B) {
 		for i := 0; i < bb.N; i++ {
-			minLog.Infof(ctx, "this is New %s test", "infof")
+			minLog.Info(ctx, "this is New %s test", "infof")
 		}
 	})
 	b.Run("debugf", func(bb *testing.B) {
 		for i := 0; i < bb.N; i++ {
-			minLog.Debugf(ctx, "this is New %s test", "errorf")
+			minLog.Debug(ctx, "this is New %s test", "errorf")
 		}
 	})
 	b.Run("errorf", func(bb *testing.B) {
 		for i := 0; i < bb.N; i++ {
-			minLog.Errorf(ctx, "this is New %s test", "errorf")
+			minLog.Error(ctx, "this is New %s test", "errorf")
 		}
 	})
 	b.Run("warnf", func(bb *testing.B) {
 		for i := 0; i < bb.N; i++ {
-			minLog.Warnf(ctx, "this is New %s test", "warnf")
+			minLog.Warn(ctx, "this is New %s test", "warnf")
 		}
 	})
 	minLog.Exit()
@@ -132,28 +129,28 @@ func BenchmarkNewParallelWithF(b *testing.B) {
 	b.Run("infof", func(bb *testing.B) {
 		bb.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				minLog.Infof(ctx, "this is New %s test", "infof")
+				minLog.Info(ctx, "this is New %s test", "infof")
 			}
 		})
 	})
 	b.Run("debugf", func(bb *testing.B) {
 		bb.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				minLog.Debugf(ctx, "this is New %s test", "debugf")
+				minLog.Debug(ctx, "this is New %s test", "debugf")
 			}
 		})
 	})
 	b.Run("errorf", func(bb *testing.B) {
 		bb.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				minLog.Errorf(ctx, "this is New %s test", "errorf")
+				minLog.Error(ctx, "this is New %s test", "errorf")
 			}
 		})
 	})
 	b.Run("warnf", func(bb *testing.B) {
 		bb.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				minLog.Warnf(ctx, "this is New %s test", "warnf")
+				minLog.Warn(ctx, "this is New %s test", "warnf")
 			}
 		})
 	})
